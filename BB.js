@@ -4,7 +4,7 @@ const progressBar = document.querySelector("progress");
 
 function startPage() {
   const img = new Image();
-  img.src = "http://i66.tinypic.com/141tmd3.png";
+  img.src = "https://i66.tinypic.com/141tmd3.png";
   ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
   ctx.font = "30px Arial";
   ctx.fillStyle = "Green";
@@ -47,7 +47,7 @@ function gameBegins() {
     constructor(x, y, radius, speed) {
       super();
       this.image = new Image();
-      this.image.src = "http://i68.tinypic.com/15htm8.png";
+      this.image.src = "https://i68.tinypic.com/15htm8.png";
       Object.assign(this, { x, y, radius, speed });
     }
     draw() {
@@ -61,7 +61,7 @@ function gameBegins() {
     constructor(x, y, radius, speed) {
       super();
       this.image = new Image();
-      this.image.src = "http://i66.tinypic.com/o8b0qw.png";
+      this.image.src = "https://i66.tinypic.com/o8b0qw.png";
       Object.assign(this, { x, y, radius, speed });
     }
     draw() {
@@ -117,7 +117,7 @@ function gameBegins() {
 
   function clearBackground() {
     const img = new Image();
-    img.src = "http://i66.tinypic.com/141tmd3.png";
+    img.src = "https://i66.tinypic.com/141tmd3.png";
     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
   }
 

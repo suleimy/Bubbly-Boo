@@ -1,15 +1,15 @@
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 const progressBar = document.querySelector("progress");
-
+const backgroundImage = new Image();
+backgroundImage.src = "http://i66.tinypic.com/141tmd3.png";
+      
 function startPage() {
-  const img = new Image();
-  img.src = "https://i66.tinypic.com/141tmd3.png";
-  ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+  ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
   ctx.font = "30px Arial";
   ctx.fillStyle = "Green";
   ctx.fillText("Welcome to Bubbly Boo", 120, canvas.height / 2);
-  ctx.fillText("Click to Start! Don't let them take her hat!",130, 350,300, 200);
+  ctx.fillText( "Click to Start! Don't let them take her hat!",  130,   350,  300,  200);
 }
 
 startPage();
@@ -47,7 +47,7 @@ function gameBegins() {
     constructor(x, y, radius, speed) {
       super();
       this.image = new Image();
-      this.image.src = "https://i68.tinypic.com/15htm8.png";
+      this.image.src = "http://i68.tinypic.com/15htm8.png";
       Object.assign(this, { x, y, radius, speed });
     }
     draw() {
@@ -61,7 +61,7 @@ function gameBegins() {
     constructor(x, y, radius, speed) {
       super();
       this.image = new Image();
-      this.image.src = "https://i66.tinypic.com/o8b0qw.png";
+      this.image.src = "http://i66.tinypic.com/o8b0qw.png";
       Object.assign(this, { x, y, radius, speed });
     }
     draw() {
@@ -116,9 +116,7 @@ function gameBegins() {
   }
 
   function clearBackground() {
-    const img = new Image();
-    img.src = "https://i66.tinypic.com/141tmd3.png";
-    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
   }
 
   function drawScene() {
@@ -128,7 +126,11 @@ function gameBegins() {
     updateScene();
     if (progressBar.value <= 0) {
       ctx.font = "30px Times New Roman";
-      ctx.fillText("BooHoo Bubble You Lost, Try Again or Not", 20, canvas.height / 2);
+      ctx.fillText(
+        "BooHoo Bubble You Lost, Try Again or Not",
+        20,
+        canvas.height / 2
+      );
     } else {
       requestAnimationFrame(drawScene);
     }

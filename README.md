@@ -7,4 +7,4 @@
  https://www.gameart2d.com/jelly-squash-free-sprites.html
 
 
-PLAY https://github.com/suleimy/Follow.git
+PLAY https://suleimy.github.io/Bubbly-Boo/

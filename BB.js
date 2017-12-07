@@ -2,7 +2,7 @@ const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 const progressBar = document.querySelector("progress");
 const backgroundImage = new Image();
-backgroundImage.src = "http://i66.tinypic.com/141tmd3.png";
+backgroundImage.src = "https://ibb.co/e4JyNw";
       
 function startPage() {
   ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);

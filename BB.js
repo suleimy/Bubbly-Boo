@@ -1,3 +1,5 @@
+
+
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 const progressBar = document.querySelector("progress");
@@ -9,7 +11,7 @@ function startPage() {
   ctx.font = "30px Arial";
   ctx.fillStyle = "Green";
   ctx.fillText("Welcome to Bubbly Boo", 120, canvas.height / 2);
-  ctx.fillText("Click to Start! Don't let them take her hat!",130,350,300,200);
+  ctx.fillText("Click to Start! Don't let them take her hat!",130, 350,300, 200);
 }
 
 startPage();
@@ -74,7 +76,7 @@ function gameBegins() {
     new Enemy(200, 250, 30, 0.01),
     new Enemy(150, 180, 62, 0.002)
   ];
-  
+
   let mouse = { x: 0, y: 0 };
   document.body.addEventListener("mousemove", updateMouse);
   function updateMouse(event) {
@@ -106,8 +108,8 @@ function gameBegins() {
     moveToward(mouse, player, player.speed);
     enemies.forEach(enemy => moveToward(player, enemy, enemy.speed));
     enemies.forEach((enemy, i) =>
-      pushOff(enemy, enemies[(i + 5) % enemies.length])
-    );
+                    pushOff(enemy, enemies[(i + 5) % enemies.length])
+                   );
     enemies.forEach(enemy => {
       if (haveCollided(enemy, player)) {
         progressBar.value -= 1;
@@ -128,11 +130,7 @@ function gameBegins() {
     updateScene();
     if (progressBar.value <= 0) {
       ctx.font = "30px Times New Roman";
-      ctx.fillText(
-        "BooHoo Bubble You Lost, Try Again or Not",
-        20,
-        canvas.height / 2
-      );
+      ctx.fillText("BooHoo Bubble You Lost, Try Again or Not", 20, canvas.height / 2);
     } else {
       requestAnimationFrame(drawScene);
     }
@@ -141,5 +139,3 @@ function gameBegins() {
   canvas.addEventListener("click", startGame);
   requestAnimationFrame(drawScene);
 }
-
-

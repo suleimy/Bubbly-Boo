@@ -1,67 +1,145 @@
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
+const progressBar = document.querySelector("progress");
 
-let ball = { x: 250, y: 150, radius: 25, color: "lemonchiffon" };
-let enemy = { x: 250, y: 250, width: 30, color: "gold" };
-let mouse = { x: 0, y: 0 };
-
-function updateMouse(event) {
-  const { left, top } = canvas.getBoundingClientRect();
-  mouse.x = event.clientX - left;
-  mouse.y = event.clientY - top;
+function startPage() {
+  const img = new Image();
+  img.src = "http://i66.tinypic.com/141tmd3.png";
+  ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+  ctx.font = "30px Arial";
+  ctx.fillStyle = "Green";
+  ctx.fillText("Welcome to Bubbly Boo", 120, canvas.height / 2);
+  ctx.fillText("Click to Start! Don't let them take her hat!",130,350,300,200);
 }
 
-document.body.addEventListener("mousemove", updateMouse);
+startPage();
 
-function clearBackground() {
-  ctx.fillStyle = "lightgreen";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-}
+canvas.addEventListener("click", gameBegins);
 
-function drawBall() {
-  ctx.fillStyle = ball.color;
-  ctx.beginPath();
-  ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.stroke();
-}
+function gameBegins() {
+  function startGame() {
+    if (progressBar.value === 0) {
+      progressBar.value = 100;
+      Object.assign(player, { x: canvas.width / 2, y: canvas.height / 2 });
+      requestAnimationFrame(drawScene);
+    }
+  }
 
-function drawEnemy() {
-  ctx.fillStyle = enemy.color;
-  ctx.fillRect(
-    enemy.x - enemy.width / 2,
-    enemy.y - enemy.width / 2,
-    enemy.width,
-    enemy.width
-  );
-  ctx.strokeRect(
-    enemy.x - enemy.width / 2,
-    enemy.y - enemy.width / 2,
-    enemy.width,
-    enemy.width
-  );
-}
+  function distanceBetween(sprite1, sprite2) {
+    return Math.hypot(sprite1.x - sprite2.x, sprite1.y - sprite2.y);
+  }
 
-function moveToward(leader, follower, speed) {
-  follower.x += (leader.x - follower.x) * speed;
-  follower.y += (leader.y - follower.y) * speed;
-}
+  function haveCollided(sprite1, sprite2) {
+    return distanceBetween(sprite1, sprite2) < sprite1.radius + sprite2.radius;
+  }
 
-function updateScene() {
-  ball.x += (mouse.x - ball.x) * 0.05;
-  ball.y += (mouse.y - ball.y) * 0.05;
+  class Sprite {
+    draw() {
+      ctx.fillStyle = this.color;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+    }
+  }
+
+  class Player extends Sprite {
+    constructor(x, y, radius, speed) {
+      super();
+      this.image = new Image();
+      this.image.src = "http://i68.tinypic.com/15htm8.png";
+      Object.assign(this, { x, y, radius, speed });
+    }
+    draw() {
+      ctx.drawImage(this.image, this.x - 15, this.y, 90, 90);
+    }
+  }
+
+  let player = new Player(250, 150, 6, 0.07);
+
+  class Enemy extends Sprite {
+    constructor(x, y, radius, speed) {
+      super();
+      this.image = new Image();
+      this.image.src = "http://i66.tinypic.com/o8b0qw.png";
+      Object.assign(this, { x, y, radius, speed });
+    }
+    draw() {
+      ctx.drawImage(this.image, this.x, this.y, this.radius, 70);
+    }
+  }
+
+  let enemies = [
+    new Enemy(80, 200, 40, 0.02),
+    new Enemy(200, 250, 30, 0.01),
+    new Enemy(150, 180, 62, 0.002)
+  ];
   
-  enemy.x += (ball.x - enemy.x) * 0.02;
-  enemy.y += (ball.y - enemy.y) * 0.02;
-}
+  let mouse = { x: 0, y: 0 };
+  document.body.addEventListener("mousemove", updateMouse);
+  function updateMouse(event) {
+    const { left, top } = canvas.getBoundingClientRect();
+    mouse.x = event.clientX - left;
+    mouse.y = event.clientY - top;
+  }
 
-function drawScene() {
-  clearBackground();
-  drawBall();
-  drawEnemy();
-  updateScene();
+  function moveToward(leader, follower, speed) {
+    follower.x += (leader.x - follower.x) * speed;
+    follower.y += (leader.y - follower.y) * speed;
+  }
+
+  function pushOff(c1, c2) {
+    let [dx, dy] = [c2.x - c1.x, c2.y - c1.y];
+    const L = Math.hypot(dx, dy);
+    let distToMove = c1.radius + c2.radius - L;
+    if (distToMove > 0) {
+      dx /= L;
+      dy /= L;
+      c1.x -= dx * distToMove / 2;
+      c1.y -= dy * distToMove / 2;
+      c2.x += dx * distToMove / 2;
+      c2.y += dy * distToMove / 2;
+    }
+  }
+
+  function updateScene() {
+    moveToward(mouse, player, player.speed);
+    enemies.forEach(enemy => moveToward(player, enemy, enemy.speed));
+    enemies.forEach((enemy, i) =>
+      pushOff(enemy, enemies[(i + 5) % enemies.length])
+    );
+    enemies.forEach(enemy => {
+      if (haveCollided(enemy, player)) {
+        progressBar.value -= 1;
+      }
+    });
+  }
+
+  function clearBackground() {
+    const img = new Image();
+    img.src = "http://i66.tinypic.com/141tmd3.png";
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+  }
+
+  function drawScene() {
+    clearBackground();
+    player.draw();
+    enemies.forEach(enemy => enemy.draw());
+    updateScene();
+    if (progressBar.value <= 0) {
+      ctx.font = "30px Times New Roman";
+      ctx.fillText(
+        "BooHoo Bubble You Lost, Try Again or Not",
+        20,
+        canvas.height / 2
+      );
+    } else {
+      requestAnimationFrame(drawScene);
+    }
+  }
+
+  canvas.addEventListener("click", startGame);
   requestAnimationFrame(drawScene);
 }
 
-requestAnimationFrame(drawScene);
 

@@ -47,7 +47,7 @@ function gameBegins() {
     constructor(x, y, radius, speed) {
       super();
       this.image = new Image();
-      this.image.src = "http://i68.tinypic.com/15htm8.png";
+      this.image.src = "https://ibb.co/c1OR9b";
       Object.assign(this, { x, y, radius, speed });
     }
     draw() {
@@ -61,7 +61,7 @@ function gameBegins() {
     constructor(x, y, radius, speed) {
       super();
       this.image = new Image();
-      this.image.src = "http://i66.tinypic.com/o8b0qw.png";
+      this.image.src = "https://ibb.co/fJOtpb";
       Object.assign(this, { x, y, radius, speed });
     }
     draw() {

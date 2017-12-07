@@ -3,14 +3,12 @@ canvas {
   margin-top: 10px;
 }
 
-
 progress {
-  height: 10px; 
-  
+  height: 10px;
 }
 
 h1 {
-  font: 10px; 
+  font: 10px;
   padding-left: 100px;
 }
 
@@ -18,3 +16,4 @@ body {
   margin-top: 0;
   padding-left: 20px;
 }
+

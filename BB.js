@@ -2,7 +2,7 @@ const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 const progressBar = document.querySelector("progress");
 const backgroundImage = new Image();
-backgroundImage.src = "https://ibb.co/e4JyNw";
+backgroundImage.src = "https://image.ibb.co/ckQdNw/BG.png";
       
 function startPage() {
   ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
@@ -47,7 +47,7 @@ function gameBegins() {
     constructor(x, y, radius, speed) {
       super();
       this.image = new Image();
-      this.image.src = "https://ibb.co/c1OR9b";
+      this.image.src = "https://image.ibb.co/cXFHFG/Idle_1.png";
       Object.assign(this, { x, y, radius, speed });
     }
     draw() {
@@ -61,7 +61,7 @@ function gameBegins() {
     constructor(x, y, radius, speed) {
       super();
       this.image = new Image();
-      this.image.src = "https://ibb.co/fJOtpb";
+      this.image.src = "https://image.ibb.co/icGDpb/Jelly_5.png";
       Object.assign(this, { x, y, radius, speed });
     }
     draw() {
